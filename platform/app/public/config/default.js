@@ -3,7 +3,12 @@
 const config = {
   routerBasename: '/',
   // whiteLabeling: {},
-  extensions: [],
+  "extensions": [
+    //....
+    
+     "ohif-aws-healthimaging"
+    
+  ],
   modes: [],
   customizationService: {},
   showStudyList: true,
@@ -40,10 +45,10 @@ const config = {
       sourceName: 'dicomweb',
       configuration: {
         friendlyName: 'AWS S3 Static wado server',
-        name: 'aws',
-        wadoUriRoot: 'https://d33do7qe4w26qo.cloudfront.net/dicomweb',
-        qidoRoot: 'https://d33do7qe4w26qo.cloudfront.net/dicomweb',
-        wadoRoot: 'https://d33do7qe4w26qo.cloudfront.net/dicomweb',
+        name: 'gcp',
+        wadoUriRoot: 'https://orthorex-dicom-proxy-516339341332.asia-northeast1.run.app/dicomweb',
+        qidoRoot: 'https://orthorex-dicom-proxy-516339341332.asia-northeast1.run.app/dicomweb',
+        wadoRoot: 'https://orthorex-dicom-proxy-516339341332.asia-northeast1.run.app/dicomweb',
         qidoSupportsIncludeField: false,
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',
@@ -88,7 +93,34 @@ const config = {
           relativeResolution: 'studies',
         },
         omitQuotationForMultipartRequest: true,
+      }},
+     {
+    namespace: 'ohif-aws-healthimaging.dataSourcesModule.healthlake',
+    sourceName: 'healthLake',
+    configuration: {
+      friendlyName: 'Yukis AWS HealthImaging Proxy',
+      name: 'healthLake',
+      healthlake: {
+      datastoreID: '240a87cbd05247808265ff6fd76ed94f',
+      endpoint: 'https://d2169yscsxj5sl.cloudfront.net',// Add here the address to you proxy
+    },
+      qidoSupportsIncludeField: false,
+      imageRendering: 'wadors',
+      thumbnailRendering: 'wadors',
+      enableStudyLazyLoad: true,
+      supportsFuzzyMatching: false,
+      supportsWildcard: true,
+      staticWado: true,
+      singlepart: 'bulkdata,video,pdf,image/jphc',
+      // whether the data source should use retrieveBulkData to grab metadata,
+      // and in case of relative path, what would it be relative to, options
+      // are in the series level or study level (some servers like series some study)
+      bulkDataURI: {
+        enabled: true,
+        relativeResolution: 'studies',
       },
+      omitQuotationForMultipartRequest: true,
+    },
     },
     {
       namespace: '@ohif/extension-default.dataSourcesModule.dicomwebproxy',
